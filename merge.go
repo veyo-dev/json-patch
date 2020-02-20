@@ -215,7 +215,7 @@ func createObjectMergePatch(originalJSON, modifiedJSON []byte) ([]byte, error) {
 		return nil, ErrBadJSONDoc
 	}
 
-	dest, err := getDiff(originalDoc, modifiedDoc)
+	dest, err := GetDiff(originalDoc, modifiedDoc)
 	if err != nil {
 		return nil, err
 	}
@@ -328,8 +328,8 @@ func matchesValue(av, bv interface{}) bool {
 	return false
 }
 
-// getDiff returns the (recursive) difference between a and b as a map[string]interface{}.
-func getDiff(a, b map[string]interface{}) (map[string]interface{}, error) {
+// GetDiff returns the (recursive) difference between a and b as a map[string]interface{}.
+func GetDiff(a, b map[string]interface{}) (map[string]interface{}, error) {
 	into := map[string]interface{}{}
 	for key, bv := range b {
 		av, ok := a[key]
@@ -348,7 +348,7 @@ func getDiff(a, b map[string]interface{}) (map[string]interface{}, error) {
 		case map[string]interface{}:
 			bt := bv.(map[string]interface{})
 			dst := make(map[string]interface{}, len(bt))
-			dst, err := getDiff(at, bt)
+			dst, err := GetDiff(at, bt)
 			if err != nil {
 				return nil, err
 			}
