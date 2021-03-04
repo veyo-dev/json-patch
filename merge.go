@@ -297,6 +297,11 @@ func matchesValue(av, bv interface{}) bool {
 		if bt == at {
 			return true
 		}
+	case json.Number:
+		bt := bv.(json.Number)
+		if bt == at {
+			return true
+		}
 	case bool:
 		bt := bv.(bool)
 		if bt == at {
@@ -355,7 +360,7 @@ func GetDiff(a, b map[string]interface{}) (map[string]interface{}, error) {
 			if len(dst) > 0 {
 				into[key] = dst
 			}
-		case string, float64, bool:
+		case string, float64, bool, json.Number:
 			if !matchesValue(av, bv) {
 				into[key] = bv
 			}
